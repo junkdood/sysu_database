@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{name}}</title>
+	<style>
+ 	a{
+ 		text-decoration: none;
+ 	}
+	a:link,a:visited {
+    	color: black;
+	}
+ 	</style>
+</head>
+<body>
+<table>
+	<p>
+	<a href="{% url 'test'%}">返回所有表</a>
+    </p>
+	{% for a in attr %}
+	<td>{{a.0}}</td>
+	{% endfor %}
+	<td>操作</td>
+	</tr>
+    {% for d in data %}
+    <tr>
+	{% for dd in d %}
+	<td>{{dd}}</td>
+	{% endfor %}
+	<td><button>没写</button></td></tr>
+    {% empty %}
+    <td>空空如也～</td>
+    {% endfor %}
+</table>
+</body>
+</html>

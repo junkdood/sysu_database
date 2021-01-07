@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>详情</title>
+</head>
+<body>
+<table>
+	{% for a in attr %}
+	<td>{{a.0}}</td>
+	{% endfor %}
+	</tr>
+    {% for d in data %}
+    <tr>
+	{% for dd in d %}
+	<td>{{dd}}</td>
+	{% endfor %}
+    </tr>
+</table>
+</body>
+</html>

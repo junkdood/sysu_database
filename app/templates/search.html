@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+ 
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>搜索</title>
+    <!-- Bootstrap -->
+	<link rel="stylesheet" href="{% static 'articleList.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+</head>
+ 
+<body background="{% static "image/background.jpg" %}" style=" background-repeat:no-repeat ; background-size:100% 100%; background-attachment: fixed;">
+	
+	<ul class="nav" style="height:90px">
+          <h3><li><a class="active" href="{% url 'home' %}">主页</a></li></h3>
+          <h3><li><a href="{% url 'test_list'%}" style="color:black">all</a></li></h3>			
+          <h3><li><a href="{% url 'test_with_type' 'abc'%}" style="color:black">abc</a></li></h3>
+         <h3><li><a href="{% url 'test_with_type' 'def'%}" style="color:black">def</a></li></h3>
+         <h3><li><a href="{% url 'test' %}" style="color:black">关于</a></li></h3>
+        </ul>	
+
+    <divt class="col-sm-4" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+        <form method="get" action="/search/">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" name="mykey" class="form-control" placeholder="请输入CID" required />
+                <span class="input-group-btn">
+                    <input type="submit" class="btn btn-default" value="查询" />
+                </span>
+            </div>
+        </form>
+    </div>
+</body>
+ 
+</html>

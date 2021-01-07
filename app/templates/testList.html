@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <title>test</title>
+    <link rel="stylesheet" href="{% static 'articleList.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    </head>
+    <body>
+        <ul class="nav" style="height:90px">
+          <h3><li><a class="active" href="{% url 'home' %}">主页</a></li></h3>
+          <h3><li><a href="{% url 'test_list'%}">all</a></li></h3>			
+          <h3><li><a href="{% url 'test_with_type' 'abc'%}">abc</a></li></h3>
+         <h3><li><a href="{% url 'test_with_type' 'def'%}">def</a></li></h3>
+         <h3><li><a href="{% url 'test' %}">关于</a></li></h3>
+        </ul>
+        <br>
+         <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">
+                      <h3 class="panel-title">data</h3>
+                      </div>
+                       <div class="panel-body">
+                        {% for article in articles_list %}
+                         <p><h3><a href="{% url 'test_detail' article.0%}">{{ article.0 }}</a></h3></p>
+                         <p><h5 style="color:grey">
+                         发表于{{ article.0 }}&nbsp&nbsp&nbsp&nbsp&nbsp
+                         作者：{{ article.1 }}</h5></p>
+                         <p><h5 style="color:grey">分类：<a href="{% url 'test_with_type' article.1%}">{{ article.1 }}</a></h5></p>
+                        {% endfor %}
+                        <p><h5 style="color:grey">一共有{{ articles_list|length }}个数据</h5></p>
+                       </div>
+                      </div>
+                   </div>
+
+              <div class="col-sm-4">
+                         <div class="panel panel-default">
+                              <div class="panel-heading">
+                              <h3 class="panel-title">data类型</h3>
+                              </div>
+                             
+                              <div class="panel-body">
+                              <ul class="navright">
+                              {% for type in articles_type %}
+                              <li class="type"><a href="{% url 'test_with_type' type.0%}"><p>{{ type.0 }}</p></a></li>                    
+                              {% endfor %}
+                              </ul>
+                              </div>
+                           
+                          </div>
+              </div>          
+             </div>
+        </div>
+    </body>
+<html/>
