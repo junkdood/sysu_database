@@ -28,13 +28,13 @@ def get_result_page(request,result_id):
 		cursor.execute(sql_str)
 		attr = cursor.fetchall()
 	# 获取当前番剧的各个属性值
-	sql_str = "select * from 番剧表 where 番剧名={}".format(result_id)
+	sql_str = "select * from 番剧表 where 番剧名='{}'".format(result_id)
 	with connection.cursor() as cursor:
 		cursor.execute(sql_str)
 		data = cursor.fetchall()
 	context={}
-	context['attr']=attr
-	context['data']=data
+	context['columns']=attr
+	context['values']=data
 	return render(request,'result_page.html',context)
 
 

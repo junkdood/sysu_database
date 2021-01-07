@@ -5,17 +5,14 @@
     <title>详情</title>
 </head>
 <body>
-<table>
-	{% for a in attr %}
-	<td>{{a.0}}</td>
+	{% for col in columns %}
+	<td>{{col.0}}</td>
 	{% endfor %}
 	</tr>
-    {% for d in data %}
     <tr>
-	{% for dd in d %}
-	<td>{{dd}}</td>
+	{% for value in values.0 %}
+	<td>{{value}}</td>
 	{% endfor %}
     </tr>
-</table>
 </body>
 </html>
