@@ -5,14 +5,12 @@
     <title>详情</title>
 </head>
 <body>
-	{% for col in columns %}
-	<td>{{col.0}}</td>
-	{% endfor %}
-	</tr>
-    <tr>
-	{% for value in values.0 %}
-	<td>{{value}}</td>
-	{% endfor %}
-    </tr>
+    <p>
+        <ul>
+            {% for column, value in column_value_pairs %}
+            <li>{{column}}：{{value}}</li>
+            {% endfor %}
+        </ul>
+    </p>
 </body>
 </html>

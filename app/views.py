@@ -33,8 +33,7 @@ def get_result_page(request,result_id):
 		cursor.execute(sql_str)
 		data = cursor.fetchall()
 	context={}
-	context['columns']=attr
-	context['values']=data
+	context['column_value_pairs']= [(attr[i][0], data[0][i]) for i in range(len(attr))]
 	return render(request,'result_page.html',context)
 
 
