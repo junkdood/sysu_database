@@ -26,13 +26,16 @@
         <form method="get" action="/search/">
             {% csrf_token %}
             <div class="input-group">
-                <input type="text" name="mykey" class="form-control" placeholder="请输入番剧名" required />
+                <input type="text" name="mykey" class="form-control" placeholder="请在下方选择搜索类型并输入关键词" required />
                 <span class="input-group-btn">
                     <input type="submit" class="btn btn-default" value="查询" />
                 </span>
             </div>
+	    <input type="radio" name="searchType" value="fanju"><font color="white">搜索番剧</font>
+	    <input type="radio" name="searchType" value="shengyou"><font color="white">搜索声优</font>
+	    <input type="radio" name="searchType" value="gequ"><font color="white">搜索歌曲</font>
+	    <input type="radio" name="searchType" value="gongsi"><font color="white">搜索制作公司</font>
         </form>
     </div>
 </body>
- 
 </html>

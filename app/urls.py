@@ -23,8 +23,9 @@ urlpatterns = [
 	path('test/',testt,name='test'),
 	path('testshow/<table_name>/',testshow,name='testshow'),
 	path('test_with_type/<typee>/', test_with_type,name='test_with_type'),
-	path('result_page/<result_id>/', get_result_page,name='result_page'),
-	path('test_list/', test_list,name='test_list'),
+	#path('result_page/<result_id>/', get_result_page,name='result_page'),
+	path('result_page/<result_id>/<searchType>', get_result_page,name='result_page'),
+        path('test_list/', test_list,name='test_list'),
 	path('', get_home_page,name='home'),
 	path('search/', search, name='search')
 ]

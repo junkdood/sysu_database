@@ -12,9 +12,8 @@
           <h3><li><a class="active" href="{% url 'home' %}">主页</a></li></h3>
         </ul>
         <br>
-            <p>{{ articles_Type.type_name }}<p>
-            {% for result in search_result_list %}
-            <p><h3><a href="{% url 'result_page' result.0%}">{{ result.0 }}</a></h3></p>
+            {% for result_url, result, searchType in search_result_list %}
+            <p><h3><a href="{% url 'result_page' result_url searchType %}">{{ result }}</a></h3></p>
             {% endfor %}
             <p><h5 style="color:grey">一共有{{ search_result_list|length }}个搜索结果</h5></p>
     </body>
