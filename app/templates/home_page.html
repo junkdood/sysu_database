@@ -19,20 +19,23 @@
 	
 	<ul class="nav" style="height:90px">
             <h3><li><a class="active" href="{% url 'home' %}">主页</a></li></h3>
-            <h3><li><a href="{% url 'test' %}">关于</a></li></h3>
+            <h3><li><a href="{% url 'show_tables' %}">关于</a></li></h3>
         </ul>	
 
     <divt class="col-sm-4" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
         <form method="get" action="/search/">
             {% csrf_token %}
             <div class="input-group">
-                <input type="text" name="mykey" class="form-control" placeholder="请输入番剧名" required />
+                <input type="text" name="search_key_value" class="form-control" placeholder="请在下方选择搜索类型并输入关键词" required />
                 <span class="input-group-btn">
                     <input type="submit" class="btn btn-default" value="查询" />
                 </span>
             </div>
+	    <input type="radio" name="table_name" value="番剧表"><font color="white">搜索番剧</font>
+	    <input type="radio" name="table_name" value="声优表"><font color="white">搜索声优</font>
+	    <input type="radio" name="table_name" value="曲目表"><font color="white">搜索歌曲</font>
+	    <input type="radio" name="table_name" value="制作公司表"><font color="white">搜索制作公司</font>
         </form>
     </div>
 </body>
- 
 </html>

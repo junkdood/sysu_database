@@ -19,11 +19,12 @@
 <table>
     <tr><td>table</td><td>操作</td></tr>
     {% for user in list %}
-    <tr><td><a href="{% url 'testshow' user.0%}">{{user.0}}</a></td>
-        <td><a href="{% url 'testshow' user.0%}"><button>查看</button></a></td></tr>
+    <tr><td><a href="{% url 'edit_table' user.0%}">{{user.0}}</a></td>
+        <td><a href="{% url 'edit_table' user.0%}"><button>查看</button></a></td></tr>
 	{% empty %}
 	<td>空空如也～</td>
     {% endfor %}
 </table>
 </body>
 </html>
+

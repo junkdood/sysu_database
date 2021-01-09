@@ -14,20 +14,25 @@
 </head>
 <body>
 <table>
-	<p>
-	<a href="{% url 'test'%}">返回所有表</a>
-    </p>
+    <tr>
 	{% for a in attr %}
-	<td>{{a.0}}</td>
+	<th>{{a.0}}</th>
 	{% endfor %}
 	<td>操作</td>
 	</tr>
+    <tr>
+	{% for a in attr %}
+    <input type="text" name=a.0 class="form-control" required />
+    {% endfor %}
+	<td><button>将已填写内容添加到数据库</button></td></tr>
+	</tr>
+    下面的内容展示可以加个开关
     {% for d in data %}
     <tr>
 	{% for dd in d %}
 	<td>{{dd}}</td>
 	{% endfor %}
-	<td><button>没写</button></td></tr>
+	<td><button>用已填写内容替换</button></td><td><button>删除该内容</button></td></tr>
     {% empty %}
     <td>空空如也～</td>
     {% endfor %}
