@@ -1,5 +1,4 @@
 """app URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
 Examples:
@@ -22,7 +21,6 @@ urlpatterns = [
 	path('admin/', admin.site.urls),
 	path('tables/',show_tables,name='show_tables'),
 	path('edit/<table_name>/',edit_table,name='edit_table'),
-	path('update/', update_table, name='update'),
 	path('result_page/<result_id>/<table_name>', get_result_page,name='new_result_page'),
 	path('', get_home_page,name='home'),
 	path('search/', search, name='search')
