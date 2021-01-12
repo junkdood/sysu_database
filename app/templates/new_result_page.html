@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>详情</title>
+    <style>
+        .a-table{
+            background-color: #FBFBFB80;
+            filter:alpha(Opacity=100);
+            -moz-opacity:1;
+            opacity: 1;
+            
+        }
+        th,td{
+            border:1px solid #a7d7f9;
+        }
+        .a-th{
+            background-color:#fcdd97;
+        }
+        .main-body{
+            background-color:#FFFFFFCC;
+            float:right;
+            width:85%;
+            border-radius:1%;
+            border:1px solid #a7d7f9;
+        }
+        .main-body-l{
+            background-color:#FFFFFFCC;
+            float:left;
+            width:13%;
+            border-radius:5%;
+            border:1px solid #a7d7f9;
+        }
+        .sub-body{
+            margin-left:2%;
+            margin-right:2%;
+            background-color:rgba(255,255,255,0);
+            transition:background-color 0.5s;
+            border-radius:1%;
+        }
+        .sub-body:hover{
+          background-color:rgba(255,255,255,0.99)
+        }
+        .sub-body-l{
+            margin-left:7%;
+            margin-right:7%;
+            background-color:rgba(255,255,255,0);
+            transition:background-color 0.5s;
+            border-radius:1%;
+        }
+        .sub-body-l:hover{
+          background-color:rgba(255,255,255,0.99)
+        }
+        .r-pic{
+            margin-right:2%;
+            background-color:rgb(255, 238, 221);
+            float:right;
+            width:30%;
+            height:auto;
+        }
+        .text-url{
+            text-decoration: none;
+            color:#0645ad;
+        }
+        .text-url:hover{
+            text-decoration:underline;
+            color:#0b0080;
+        }
+        .text-url:visited{
+            color:#0b0080;
+        }
+    </style>
+</head>
+<body background="{% static "image/bg7.jpg" %}" style=" background-repeat:no-repeat ; background-size:100% 100%; background-attachment: fixed;">
+<div class=main-body-l>
+    <div class=sub-body-l>
+        <h3><a  href="{% url 'home' %}"class=text-url>主页</a></h3>
+    </div>
+    <div class=sub-body-l>
+        <h3>搜索</h3>
+    <divt>
+        <form method="get" action="/search/">
+            {% csrf_token %}
+            <div >
+                <input style="width:80%;" type="text" name="search_key_value" placeholder="请在下方选择搜索类型并输入关键词,'%'匹配所有条目" required />
+                <span class="input-group-btn">
+                    <input type="submit" class="btn btn-default" value="查询" />
+                </span>
+            </div>
+        <input type="radio" name="table_name" value="番剧表"><font color="black">搜索番剧</font><br />
+	    <input type="radio" name="table_name" value="声优表"><font color="black">搜索声优</font><br />
+	    <input type="radio" name="table_name" value="曲目表"><font color="black">搜索歌曲</font><br />
+	    <input type="radio" name="table_name" value="制作公司表"><font color="black">搜索制作公司</font><br />
+        </form>
+    </divt>
+    </div>
+    <div class=sub-body-l>
+        <h3>相关链接</h3>
+        {% for related_url, url_name in relatedurl %}
+        <p><h5><a href={{ related_url }}>{{ url_name }}</a></h5></p>
+        {% empty %}
+        空空如也~
+    {% endfor %}
+    </div>
+</div>
+
+ <div class=main-body>
+    <h1 style="margin-left:2%;">{{current_name}}
+    </h1>
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=1)" width="95%" color=#987cb9 SIZE=3>
+    <div class=r-pic>
+    <table><tr><th>
+        {% if picpath %}
+            {% for path in picpath %}
+                <img src={{ path }} width=100% >
+            {% endfor %}
+        {%endif%}
+    </th></tr></table>
+    <input type="file">
+    </div>
+     <div class=sub-body>
+    {% for 标题, 内容 in main_info %}
+        <h3>{{标题}}</h3>
+        <p>
+            <ul>
+                {% for attr, value in 内容 %}
+                <li>{{attr}}：{{value}}</li>
+                {% endfor %}
+            </ul>
+        </p>
+    {% endfor %}
+    </div>
+    <div class=sub-body>
+    {% for 其他标题, 其他内容 in other_info %}
+        <h3>{{ 其他标题 }}</h3>
+        <p>
+            <ul>
+                {% for attr, value in 其他内容 %}
+		{%if attr == '公司名' %}
+		<li>{{attr}}：<a href="{% url 'new_result_page' value.1 value.2 %}" class = text-url>{{value.0}}</a></li>
+		{%else%}
+		<li>{{attr}}：{{value.0}}</li>
+		{%endif%}
+                {% endfor %}
+            </ul>
+        </p>
+    {% endfor %}
+    </div>
+    {% for 相关内容标题, 相关内容属性, 相关内容元组 in related_info %}
+        <div class=sub-body>
+        <h3>{{ 相关内容标题 }}</h3>
+        <p>
+            <table class = a-table>
+            <tr>{%  for 属性 in 相关内容属性 %}
+            <th class=a-th>{{ 属性 }}</th>
+            {%  endfor %}</tr>
+
+            {%  for  元组 in 相关内容元组 %}
+                <tr>{% for 项 in 元组 %}
+                    {%if 项.3 == 1  %}
+                    <td><a href="{% url 'new_result_page' 项.1 项.2 %}" class = text-url>{{ 项.0 }}</a></td>
+                    {%else%}
+                    <td>{{ 项.0 }}</td>
+                    {%endif%}
+                {% endfor %}</tr>
+            {% empty %}
+            <td>未收录～</td>
+            {%  endfor %}
+            </table>
+        </p>
+        </div>
+    {% endfor %}
+</div>
+</body>
+</html>

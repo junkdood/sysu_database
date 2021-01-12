@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>table</title>
+	<style>
+        .a-table{
+            background-color: #FBFBFB80;
+            filter:alpha(Opacity=100);
+            -moz-opacity:1;
+            opacity: 1;
+
+        }
+ 	a{
+ 		text-decoration: none;
+ 	}
+	a:link,a:visited {
+    	color: black;
+	}
+ 	</style>
+</head>
+<body background="{% static "image/bg5.jpg" %}" style=" background-repeat:no-repeat ; background-size:100% 100%; background-attachment: fixed;">
+	<p>
+        <h3><a href="{% url 'home'%}">返回主目录</a></h3>
+    </p>
+<table class = a-table>
+    <tr><td>内容</td><td>操作</td></tr>
+    {% for user in list %}
+    <tr><td><a href="{% url 'edit_table' user.0%}">{{user.0}}</a></td>
+        <td><a href="{% url 'edit_table' user.0%}"><button>查看</button></a></td></tr>
+	{% empty %}
+	<td>空空如也～</td>
+    {% endfor %}
+</table>
+</body>
+</html>
+
