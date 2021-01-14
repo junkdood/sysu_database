@@ -131,3 +131,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS=[
        os.path.join(BASE_DIR, 'app/static'), 
         ]
+
+MEDIA_URL = '/media/' # 虚拟地址（URL方式访问的地址）
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # 文件存放目录

@@ -22,7 +22,9 @@ urlpatterns = [
 	path('admin/', admin.site.urls),
 	path('tables/',show_tables,name='show_tables'),
 	path('edit/<table_name>/',edit_table,name='edit_table'),
+	path('update/', update_table, name='update'),
 	path('result_page/<result_id>/<table_name>', get_result_page,name='new_result_page'),
+	path('addpic/', add_pic, name='addpic'),
 	path('', get_home_page,name='home'),
 	path('search/', search, name='search')
 ]

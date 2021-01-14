@@ -1,41 +1,121 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{name}}</title>
+    <title>{{table_name}}</title>
 	<style>
+        .a-table{
+            background-color: #FBFBFB80;
+            filter:alpha(Opacity=100);
+            -moz-opacity:1;
+            opacity: 1;
+
+        }
  	a{
  		text-decoration: none;
  	}
 	a:link,a:visited {
     	color: black;
 	}
+    td{
+        white-space: nowrap;/*控制单行显示*/
+        overflow: hidden;/*超出隐藏*/
+        text-overflow: ellipsis;/*隐藏的字符用省略号表示*/
+    }
+    table{
+        width: 100%;
+        table-layout: fixed;
+    }
  	</style>
+
 </head>
-<body>
-<table>
-    <tr>
-	{% for a in attr %}
-	<th>{{a.0}}</th>
-	{% endfor %}
-	<td>操作</td>
-	</tr>
-    <tr>
-	{% for a in attr %}
-    <input type="text" name=a.0 class="form-control" required />
-    {% endfor %}
-	<td><button>将已填写内容添加到数据库</button></td></tr>
-	</tr>
-    下面的内容展示可以加个开关
-    {% for d in data %}
-    <tr>
-	{% for dd in d %}
-	<td>{{dd}}</td>
-	{% endfor %}
-	<td><button>用已填写内容替换</button></td><td><button>删除该内容</button></td></tr>
-    {% empty %}
-    <td>空空如也～</td>
-    {% endfor %}
-</table>
+<body background="{% static "image/bg5.jpg" %}" style=" background-repeat:no-repeat ; background-size:100% 100%; background-attachment: fixed;">
+	<p>
+	<h3><a href="{% url 'show_tables'%}">返回所有表</a></h3>
+    </p>
+<form id="f1">
+    {%csrf_token%}
+    <input type="hidden" name="table_name" value={{ table_name }}>
+    <table class = a-table onmouseover="getrow(this)" onmouseout="backrow(this)">
+        <tr>
+        {% for a in attr %}
+        <th>{{a.0}}</th>
+        {% endfor %}
+        <th width=200><select name="option" style="width:100%;" size="2">
+            <option value="插入">插入已填写内容</option>
+{#            <option value="筛选">按填写内容筛选</option>#}
+            {% if table_name == '番剧表' or table_name == '声优表' or table_name == '制作公司表' or table_name == '曲目表' or table_name == '图片表' or table_name == '链接表'%}
+            <option value="替换">替换选中内容</option>
+            {% endif %}
+            <option value="删除">删除选中内容</option>
+        </select> </th>
+        </tr>
+        <tr>
+        {% for a in attr %}
+{#            <td><textarea rows="2" name={{ a.0 }} defaultVal=None class="form-control" style="width:95%;height:95%;border-radius: 5px" placeholder="请输入..."></textarea></td>#}
+        <td><input type="text" name={{ a.0 }} defaultVal=None class="form-control" style="width:98%;height:100%;" placeholder="请输入..."/></td>
+        {% endfor %}
+        <td width=200> <input type="submit" id='submit' class="btn btn-default" value="提交操作" style="width:100%;height:100%;"/></td>
+        </tr>
+        {% for d in data %}
+            <tr>
+            {% with i=forloop.counter%}
+            {% for dd in d %}
+                <td><label for="{{ i }}" style="display: block;width:100%;height:100%">{{dd}}</label></td>
+            {% endfor %}
+            {% endwith %}
+            <td align="center"><input type="radio" id="{{ forloop.counter }}" name="selected" value="{{ d }}" ></td>
+        {% endfor %}
+    </table>
+</form>
+
+<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+
+    $('#submit').click(function () {
+        $.ajax({
+            url: '/update/',
+            type: 'post',
+            async:false,
+            data: $('#f1').serialize(),
+            success: function(response_backend) {
+                if(response_backend != "") {
+                    alert(response_backend);
+                }
+            }
+        })
+    })
+
+var old_color = 5;
+var select_color = 5;
+
+function getrow(obj){
+   if(event.srcElement.tagName=="TD" || event.srcElement.tagName=="INPUT" || event.srcElement.tagName=="LABEL"){
+        curRow=event.srcElement.parentElement;
+        if(event.srcElement.tagName=="INPUT" || event.srcElement.tagName=="LABEL"){
+            curRow=curRow.parentElement;
+        }
+        if(curRow.style.background != select_color){
+        old_color = curRow.style.background;
+        curRow.style.background="#2f2f2f2f";
+        }
+   }
+}
+
+function backrow(obj){
+	if(event.srcElement.tagName=="TD" || event.srcElement.tagName=="INPUT" || event.srcElement.tagName=="LABEL"){
+        curRow=event.srcElement.parentElement;
+        if(event.srcElement.tagName=="INPUT" || event.srcElement.tagName=="LABEL"){
+           curRow=curRow.parentElement;
+        }
+        if(curRow.style.background != select_color){
+            curRow.style.background=old_color;
+        }
+	}
+}
+
+</script>
+
 </body>
 </html>
