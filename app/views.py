@@ -105,15 +105,13 @@ def get_result_page(request, result_id, table_name):
     return render(request, 'new_result_page.html', context)
 
 
-def show_tables(request):
+def edit_table(request, table_name):
+    context = {}
     sql_str = "show tables"
     with connection.cursor() as cursor:
         cursor.execute(sql_str)
-        dataInfo = cursor.fetchall()
-    return render(request, 'show_tables.html', {'list': dataInfo[:12]})
-
-
-def edit_table(request, table_name):
+        dataInfo = cursor.fetchall()[:12]
+    context['table_list'] = [dataInfo[i][0] for i in range(len(dataInfo))]
     sql_str = "select column_name from information_schema.COLUMNS where table_name='" + str(table_name) + "'"
     with connection.cursor() as cursor:
         cursor.execute(sql_str)
@@ -122,7 +120,6 @@ def edit_table(request, table_name):
     with connection.cursor() as cursor:
         cursor.execute(sql_str)
         data = cursor.fetchall()
-    context = {}
     context['attr'] = attr
     if data:
         data = [[str(data[i][j]) if data[i][j] != None else 'None' for j in range(len(data[0]))] for i in range(len(data))]

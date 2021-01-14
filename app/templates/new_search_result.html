@@ -8,11 +8,9 @@
     <title>搜索</title>
     <style>
         .sub-body{
-            margin-left:2%;
-            margin-right:2%;
-            background-color:rgba(255,255,255,0.2);
-            transition:background-color 0.5s;
-            border-radius:1%;
+            background-color:rgba(255,255,255,0.5);
+            transition:background-color 0.1s;
+            border-radius: 4px;
         }
         .sub-body:hover{
           background-color:rgba(255,255,255,0.8)
@@ -30,10 +28,11 @@
 
 	<ul class="nav" style="height:90px">
             <h3><li><a class="active" href="{% url 'home' %}">主页</a></li></h3>
-            <h3><li><a href="{% url 'show_tables' %}">管理</a></li></h3>
+            <h3><li><a href="{% url 'edit_table' '番剧表'%}">管理</a></li></h3>
         </ul>
 
     <divt class="col-sm-4" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+        <div  class = sub-body>
         <form method="get" action="/search/">
             {% csrf_token %}
             <div class="input-group">
@@ -42,19 +41,18 @@
                     <input type="submit" class="btn btn-default" value="查询" />
                 </span>
             </div>
-        <div  class = sub-body>
+        <div style="margin-left:5%;margin-right:5%;">
 	    <input type="radio" name="table_name" value="番剧表" checked="checked"><font color="black">搜索番剧</font>
 	    <input type="radio" name="table_name" value="声优表"><font color="black">搜索声优</font>
 	    <input type="radio" name="table_name" value="曲目表"><font color="black">搜索歌曲</font>
         <input type="radio" name="table_name" value="制作公司表"><font color="black">搜索制作公司</font>
         </div>
         </form>
-    </div >
-        <div  class = sub-body>
+    </divt >
             {% for result_url, result, table_name in search_result_list %}
-            <p><h4><a href="{% url 'new_result_page' result_url table_name %}">{{ result }}</a></h4></p>
+            <p><h4 style="margin-left:5%;margin-right:5%;"><a href="{% url 'new_result_page' result_url table_name %}">{{ result }}</a></h4></p>
             {% endfor %}
-            <p><h5 style="color:grey">一共有{{ search_result_list|length }}个搜索结果</h5></p>
+            <p><h5 style="margin-left:5%;margin-right:5%;color:grey">一共有{{ search_result_list|length }}个搜索结果</h5></p>
         </div>
     </body>
 <html/>

@@ -10,7 +10,6 @@
             filter:alpha(Opacity=100);
             -moz-opacity:1;
             opacity: 1;
-
         }
  	a{
  		text-decoration: none;
@@ -19,21 +18,83 @@
     	color: black;
 	}
     td{
-        white-space: nowrap;/*控制单行显示*/
-        overflow: hidden;/*超出隐藏*/
-        text-overflow: ellipsis;/*隐藏的字符用省略号表示*/
+	width:100%;
+	word-break:keep-all;/* 不换行 */
+	white-space:nowrap;/* 不换行 */
+	overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+	text-overflow:ellipsis;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用*/
     }
     table{
         width: 100%;
         table-layout: fixed;
     }
- 	</style>
+        .bg-primary {
+            color: #fff;
+            background-color: #FBFBFB80;
+        }
+
+        .container-fluid {
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .navbar-header {
+            margin: 0;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .navbar-brand {
+            font-size: 12px;
+            color: #FFF;
+            height: 100%;
+            display: block;
+            float: left;
+            width: 7%;
+            text-align: center;
+        }
+        .navbar-brand-main {
+            font-size: 18px;
+            color: #FFF;
+            height: 100%;
+            display: block;
+            float: left;
+            width: 10%;
+            text-align: center;
+        }
+        .navbar-brand-select {
+            font-size: 12px;
+            color: #FFF;
+            height: 100%;
+            display: block;
+            float: left;
+            width: 7%;
+            text-align: center;
+            background-color: #DCDCDC;
+        }
+        .navbar-brand:hover{background: #DCDCDC;color: #000000;}
+        .navbar-brand-main:hover{background: #DCDCDC;color: #000000;}
+    </style>
 
 </head>
-<body background="{% static "image/bg5.jpg" %}" style=" background-repeat:no-repeat ; background-size:100% 100%; background-attachment: fixed;">
-	<p>
-	<h3><a href="{% url 'show_tables'%}">返回所有表</a></h3>
-    </p>
+<nav class=" bg-primary">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand-main" href="{% url 'home'%}">主页</a>
+            {% for t_name in table_list %}
+                {% if t_name == table_name %}
+                    <a class="navbar-brand-select" href="{% url 'edit_table' t_name%}">{{t_name}}</a>
+                {% else %}
+                    <a class="navbar-brand" href="{% url 'edit_table' t_name%}">{{t_name}}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</nav>
+<body background="{% static "image/bg8.jpg" %}" style=" background-repeat:no-repeat ; background-size:100% 100%; background-attachment: fixed;">
+<h2 style="color:lightgray">{{ table_name }}</h2>
 <form id="f1">
     {%csrf_token%}
     <input type="hidden" name="table_name" value={{ table_name }}>
@@ -42,8 +103,8 @@
         {% for a in attr %}
         <th>{{a.0}}</th>
         {% endfor %}
-        <th width=200><select name="option" style="width:100%;" size="2">
-            <option value="插入">插入已填写内容</option>
+        <th width=200><select name="option" style="width:100%;background:darkgray;border-width:2px;" size="2">
+            <option value="插入" selected="selected">插入已填写内容</option>
 {#            <option value="筛选">按填写内容筛选</option>#}
             {% if table_name == '番剧表' or table_name == '声优表' or table_name == '制作公司表' or table_name == '曲目表' or table_name == '图片表' or table_name == '链接表'%}
             <option value="替换">替换选中内容</option>
@@ -54,15 +115,15 @@
         <tr>
         {% for a in attr %}
 {#            <td><textarea rows="2" name={{ a.0 }} defaultVal=None class="form-control" style="width:95%;height:95%;border-radius: 5px" placeholder="请输入..."></textarea></td>#}
-        <td><input type="text" name={{ a.0 }} defaultVal=None class="form-control" style="width:98%;height:100%;" placeholder="请输入..."/></td>
+        <th><input type="text" name={{ a.0 }} defaultVal=None class="form-control" style="width:98%;height:100%;background:#FBFBFB80;border-width:0px;" placeholder="请输入..."/></th>
         {% endfor %}
-        <td width=200> <input type="submit" id='submit' class="btn btn-default" value="提交操作" style="width:100%;height:100%;"/></td>
+        <th width=200> <input type="submit" id='submit' class="btn btn-default" value="提交操作" style="width:100%;height:100%;background:#FBFBFB80;border-width:2px"/></th>
         </tr>
         {% for d in data %}
             <tr>
             {% with i=forloop.counter%}
             {% for dd in d %}
-                <td><label for="{{ i }}" style="display: block;width:100%;height:100%">{{dd}}</label></td>
+                <td><label for="{{ i }}" style="display: block;width:100%;height:100%;" >{{dd}}</label></td>
             {% endfor %}
             {% endwith %}
             <td align="center"><input type="radio" id="{{ forloop.counter }}" name="selected" value="{{ d }}" ></td>
@@ -91,9 +152,9 @@ var old_color = 5;
 var select_color = 5;
 
 function getrow(obj){
-   if(event.srcElement.tagName=="TD" || event.srcElement.tagName=="INPUT" || event.srcElement.tagName=="LABEL"){
+   if(event.srcElement.tagName=="TD"  || event.srcElement.tagName=="LABEL"){
         curRow=event.srcElement.parentElement;
-        if(event.srcElement.tagName=="INPUT" || event.srcElement.tagName=="LABEL"){
+        if( event.srcElement.tagName=="LABEL"){
             curRow=curRow.parentElement;
         }
         if(curRow.style.background != select_color){
@@ -104,9 +165,9 @@ function getrow(obj){
 }
 
 function backrow(obj){
-	if(event.srcElement.tagName=="TD" || event.srcElement.tagName=="INPUT" || event.srcElement.tagName=="LABEL"){
+	if(event.srcElement.tagName=="TD" || event.srcElement.tagName=="LABEL"){
         curRow=event.srcElement.parentElement;
-        if(event.srcElement.tagName=="INPUT" || event.srcElement.tagName=="LABEL"){
+        if(event.srcElement.tagName=="LABEL"){
            curRow=curRow.parentElement;
         }
         if(curRow.style.background != select_color){
