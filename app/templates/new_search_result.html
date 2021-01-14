@@ -10,12 +10,12 @@
         .sub-body{
             margin-left:2%;
             margin-right:2%;
-            background-color:rgba(255,255,255,0);
+            background-color:rgba(255,255,255,0.2);
             transition:background-color 0.5s;
             border-radius:1%;
         }
         .sub-body:hover{
-          background-color:rgba(255,255,255,0.99)
+          background-color:rgba(255,255,255,0.8)
         }
     </style>
     <!-- Bootstrap -->
@@ -42,15 +42,19 @@
                     <input type="submit" class="btn btn-default" value="查询" />
                 </span>
             </div>
-	    <input type="radio" name="table_name" value="番剧表" checked="checked"><font color="white">搜索番剧</font>
-	    <input type="radio" name="table_name" value="声优表"><font color="white">搜索声优</font>
-	    <input type="radio" name="table_name" value="曲目表"><font color="white">搜索歌曲</font>
-	    <input type="radio" name="table_name" value="制作公司表"><font color="white">搜索制作公司</font>
+        <div  class = sub-body>
+	    <input type="radio" name="table_name" value="番剧表" checked="checked"><font color="black">搜索番剧</font>
+	    <input type="radio" name="table_name" value="声优表"><font color="black">搜索声优</font>
+	    <input type="radio" name="table_name" value="曲目表"><font color="black">搜索歌曲</font>
+        <input type="radio" name="table_name" value="制作公司表"><font color="black">搜索制作公司</font>
+        </div>
         </form>
-    </div>
+    </div >
+        <div  class = sub-body>
             {% for result_url, result, table_name in search_result_list %}
-            <div><p><h4><a href="{% url 'new_result_page' result_url table_name %}">{{ result }}</a></h4></p></div>
+            <p><h4><a href="{% url 'new_result_page' result_url table_name %}">{{ result }}</a></h4></p>
             {% endfor %}
             <p><h5 style="color:grey">一共有{{ search_result_list|length }}个搜索结果</h5></p>
+        </div>
     </body>
 <html/>
