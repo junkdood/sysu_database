@@ -103,7 +103,7 @@
         {% for a in attr %}
         <th>{{a.0}}</th>
         {% endfor %}
-        <th width=200><select name="option" style="width:100%;background:darkgray;border-width:2px;" size="2">
+        <th width=200><select name="option" style="width:100%;background:#ABA5A0;border-width:0px;" size="3">
             <option value="插入" selected="selected">插入已填写内容</option>
 {#            <option value="筛选">按填写内容筛选</option>#}
             {% if table_name == '番剧表' or table_name == '声优表' or table_name == '制作公司表' or table_name == '曲目表' or table_name == '图片表' or table_name == '链接表'%}
@@ -117,7 +117,7 @@
 {#            <td><textarea rows="2" name={{ a.0 }} defaultVal=None class="form-control" style="width:95%;height:95%;border-radius: 5px" placeholder="请输入..."></textarea></td>#}
         <th><input type="text" name={{ a.0 }} defaultVal=None class="form-control" style="width:98%;height:100%;background:#FBFBFB80;border-width:0px;" placeholder="请输入..."/></th>
         {% endfor %}
-        <th width=200> <input type="submit" id='submit' class="btn btn-default" value="提交操作" style="width:100%;height:100%;background:#FBFBFB80;border-width:2px"/></th>
+        <th width=200> <input type="submit" id='submit' class="btn btn-default" value="提交操作" style="width:100%;height:100%;background:#FBFBFB80;border-width:0px"/></th>
         </tr>
         {% for d in data %}
             <tr>
